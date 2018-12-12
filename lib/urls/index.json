@@ -1,0 +1,10 @@
+{
+  "css": "./app/css",
+  "js": "./app/js",
+  "jsDev": "./dev/js",
+  "data": "./app/data",
+  "stylus": "./dev/stylus",
+  "templates": "./dev/templates",
+  "docs": "./dev/docs",
+  "backup": "./backup"
+}

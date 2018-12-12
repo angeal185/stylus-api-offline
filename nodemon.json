@@ -1,0 +1,15 @@
+{
+  "delay":0,
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules"
+  ],
+  "verbose": true,
+  "execMap": {
+    "js": "node",
+	"start": "nodemon ./index.js"
+  },
+  "watch": ["app/", "lib/"],
+  "ext": "js json html css"
+}

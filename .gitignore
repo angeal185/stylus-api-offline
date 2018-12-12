@@ -1,0 +1,5 @@
+# Dependency directories
+node_modules/
+
+/server.cmd
+npm-debug\.log
