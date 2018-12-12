@@ -38,17 +38,15 @@ var Tpl = JSON.parse(localStorage.getItem('templates'));
 function build(){
   //build body
   $('.splash').after(
-    div.clone().addClass('wrap')
-      .prepend(
+    div.clone().addClass('wrap').prepend(
         sidebarTpl,
-        $('<main />').addClass('main-content')
-          .prepend(
+        $('<main />').addClass('main-content').prepend(
             headerTpl,
             div.clone().attr('id','main-content')
           )
       )
   )
-  
+
 
   //build nav
   $(Data.nav).each(function(index, el) {
@@ -96,7 +94,6 @@ function initHjs(ele){
     hljs.highlightBlock(block);
   });
 }
-
 
 getData()
 build();
