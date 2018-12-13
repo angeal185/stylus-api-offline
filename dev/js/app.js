@@ -1,4 +1,3 @@
-
 // js templates
 function reload(i){
   setTimeout(function(){
@@ -21,7 +20,6 @@ function dataCheck(setData){
   })
 }
 
-
 function hashCheck(setData){
   setData.forEach(function(i){
     $.getJSON('./app/data/' + i + '.json',function(data,status){
@@ -37,9 +35,6 @@ function hashCheck(setData){
     })
   })
 }
-
-
-
 
 function getData(){
   var splash = '<div class="splash"><IMG class="displayed" src="./app/img/stylus-logo.svg" alt="Stylus" /></div>';
@@ -89,6 +84,7 @@ function init(){
     },0);
     $('.sbToggleShow, .sbToggle').toggleClass('sbToggleShow sbToggle')
     initHjs('pre code')
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   });
 
   $('.sbToggle').click(function() {
@@ -106,8 +102,8 @@ function initHjs(ele){
 }
 
 function pageState(response){
-     document.title = response.pageTitle;
-     window.history.pushState({"pageTitle":response.pageTitle},"", response);
- }
+   document.title = response.pageTitle;
+   window.history.replaceState({"pageTitle":response.pageTitle},"", response);
+}
 
 getData()
