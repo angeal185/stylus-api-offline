@@ -83,6 +83,7 @@ function init(){
   $('#navLink > a').click(function(event) {
     var url = $(this).attr('data-href');
     $('#main-content').html(Tpl[url]);
+    pageState(url)
     $('.sidebar').animate({
       left: "toggle"
     },0);
@@ -104,6 +105,9 @@ function initHjs(ele){
   });
 }
 
-
+function pageState(response){
+     document.title = response.pageTitle;
+     window.history.pushState({"pageTitle":response.pageTitle},"", response);
+ }
 
 getData()
