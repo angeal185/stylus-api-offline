@@ -1,3 +1,12 @@
 {
+  "front":{
+    "port":"8080",
+    "server": {
+      "serverInfo": "stylus-offline-api",
+      "cache": false,
+      "gzip": true,
+      "indexFile": "index.html"
+    }
+  },
   "templates":["home","selectors","variables","interpolation","operators","mixins","functions","kwargs","bifs","vargs","comments","conditionals","hashes","iteration","import","media","fontFace","keyframes","atrules","extend","block","functionsUrl","literal","cssStyle","escape","executable","errorReporting","middleware","introspection","js","sourcemaps","nib"]
 }

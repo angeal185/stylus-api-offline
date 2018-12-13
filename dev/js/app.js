@@ -1,28 +1,20 @@
 
 // js templates
-var headerTpl = '<header class="logo"><p class="imc"><img src="./app/img/stylus-logo.svg" alt="Stylus" /></p></header>';
-var sidebarTpl = '<div class="sidebarWrap"><div class="sidebar"><nav id="navLink"></nav></div><div class="sbToggle"><img src="./app/img/gear.svg"></div></div>';
-var splash = '<div class="splash"><IMG class="displayed" src="./app/img/stylus-logo.svg" alt="Stylus" /></div>'
-var div = $('<div />');
-
-$('body').prepend(splash)
-
 function reload(i){
   setTimeout(function(){
     location.reload(true)
   },i)
 }
 
-function getData(){
-  var setData = ['data','templates'];
+function dataCheck(setData){
   setData.forEach(function(i){
     if (!localStorage.getItem(i) || localStorage.getItem(i) === '') {
       $.getJSON('./app/data/' + i + '.json',function(data,status){
         if (!status === 'success'){
           console.log('unable to get ' + i +'.json')
         }
-
         localStorage.setItem(i,JSON.stringify(data))
+        localStorage.setItem(i + 'Hash',sha3(JSON.stringify(data)))
         reload(1000)
       })
     }
@@ -30,13 +22,41 @@ function getData(){
 }
 
 
+function hashCheck(setData){
+  setData.forEach(function(i){
+    $.getJSON('./app/data/' + i + '.json',function(data,status){
+      if (!status === 'success'){
+        console.log('unable to get ' + i +'.json')
+      }
+      var dHash = JSON.stringify(data);
+      if (!localStorage.getItem(i + 'Hash') || localStorage.getItem(i + 'Hash') !== sha3(dHash)) {
+        localStorage.setItem(i,dHash)
+        localStorage.setItem(i + 'Hash',sha3(dHash))
+        reload(1000)
+      }
+    })
+  })
+}
 
-var Data = JSON.parse(localStorage.getItem('data'));
-var Tpl = JSON.parse(localStorage.getItem('templates'));
 
+
+
+function getData(){
+  var splash = '<div class="splash"><IMG class="displayed" src="./app/img/stylus-logo.svg" alt="Stylus" /></div>';
+  var setData = ['data','templates'];
+  $('body').prepend(splash);
+  dataCheck(setData);
+  hashCheck(setData);
+  build();
+}
 
 function build(){
+  var Data = JSON.parse(localStorage.getItem('data'));
+  var headerTpl = Data.header;
+  var sidebarTpl = Data.sidebar;
+  var div = $('<div />');
   //build body
+
   $('.splash').after(
     div.clone().addClass('wrap').prepend(
         sidebarTpl,
@@ -46,33 +66,22 @@ function build(){
           )
       )
   )
-
-
   //build nav
   $(Data.nav).each(function(index, el) {
     $('#navLink').append(
       '<a data-href="'+ el.url +'">' + el.title + '</li>'
     )
   });
-
-}
-
-
-function toggleCss(){
-
-    if($(this).css('left','0')){
-      $(this).css('left','300')
-    } else {
-      $(this).css('left','300')
-    }
+  init()
 }
 
 function init(){
+  var Tpl = JSON.parse(localStorage.getItem('templates'));
   $('#main-content').html(Tpl.home);
   initHjs('pre code')
 
   $('#navLink > a').click(function(event) {
-    var url = $(this).attr('data-href')
+    var url = $(this).attr('data-href');
     $('#main-content').html(Tpl[url]);
     $('.sidebar').animate({
       left: "toggle"
@@ -95,6 +104,6 @@ function initHjs(ele){
   });
 }
 
+
+
 getData()
-build();
-init();

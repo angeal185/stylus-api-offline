@@ -3,6 +3,7 @@
   "js": "./app/js",
   "jsDev": "./dev/js",
   "data": "./app/data",
+  "dataDev": "./dev/data",
   "stylus": "./dev/stylus",
   "templates": "./dev/templates",
   "docs": "./dev/docs",
